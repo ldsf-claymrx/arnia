@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function() {
 
     #Perfil del usuario Autentificado
     Route::get('/dashboard/perfil', [DashboardController::class, 'showprofile']);
+    Route::put('/updateprofile', [DashboardController::class, 'updateMyInfo']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
 

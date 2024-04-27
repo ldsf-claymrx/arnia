@@ -1,3 +1,12 @@
+@php
+    if (Auth::user()->active == 1) {
+    }else {
+        header('Location: '. url('/logout'));
+        exit;
+    }
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -166,8 +175,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; GNoSys S.A de C.V 2024</span><br>
-                        <span>Created by David</span>
+                        <span>Derechos Reservados &copy; <a href="http://axolotitopc.com" target="_blank" rel="axolotitopc.com">AxolotitoPC &reg; </a>2024</span><br>
+                        <span>Created by <a href="https://www.instagram.com/davidclaymrx/" target="_blank" rel="davidclaymrx">DavidClayMRX</a></span>
                     </div>
                 </div>
             </footer>

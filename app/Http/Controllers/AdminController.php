@@ -16,62 +16,44 @@ class AdminController extends Controller
     }
 
     public function create(Request $request) {
+
+        $requiredFields = ['name', 'lastname', 'email', 'password', 'position', 'active', 'authorization_level'];
+
+        if ($this->emptyDataValidation($request, $requiredFields)) {
+            return "Some of the fields are empty!";
+        }
+
         $Usuarios = new User;
         $Usuarios->name = $request->input('name');
         $Usuarios->lastname = $request->input('lastname');
-        $Usuarios->key_access = $request->input('key_access');
         $Usuarios->email = $request->input('email');
         $Usuarios->password = Hash::make($request->input('password'));
-
-        $id_cargo = $request->input('position');
-        $activo = $request->input('activo');
-        $nivel = $request->input('authorization_level');
-
-            
-
-        if ($id_cargo == "") {
-            return "Cargo";
-        } else if($activo == "") {
-            return "Activo";
-        } else if($nivel == "") {
-            return "Nivel";
-        } else {
-
-            $Usuarios->position = $id_cargo;
-            $Usuarios->authorization_level = $nivel;
-
-            $Usuarios->save();
-            return redirect()->back();
-        }
+        $Usuarios->position = $request->input('position');
+        $Usuarios->active = $request->input('active');
+        $Usuarios->authorization_level = $request->input('authorization_level');
+        $Usuarios->save();
+        return redirect()->back();
     }
 
 
     public function update(Request $request, $id){
         $Usuarios = User::find($id);
 
+        $requiredFields = ['name', 'lastname', 'email', 'position', 'active', 'authorization_level'];
+
+        if ($this->emptyDataValidation($request, $requiredFields)) {
+            return "Some of the fields are empty!";
+        }
+
         $Usuarios->name = $request->input('name');
         $Usuarios->lastname = $request->input('lastname');
-        $Usuarios->key_access = $request->input('key_access');
         $Usuarios->email = $request->input('email');
-        $Usuarios->password = Hash::make($request->input('password'));
-
-        $position = $request->input('position');
-        $activo = $request->input('activo');
-        $authorization_level = $request->input('authorization_level');
-            
-
-        if ($position == "") {
-            return "Cargo";
-        } else if($activo == "") {
-            return "Activo";
-        } else if($authorization_level == "") {
-            return "Autorizacion";
-        } else {
-            $Usuarios->position = $position;
-            $Usuarios->authorization_level = $authorization_level;
-            $Usuarios->update();
-            return redirect()->back();
-        }
+        $Usuarios->position = $request->input('position');
+        $Usuarios->active = $request->input('active');
+        $Usuarios->authorization_level = $request->input('authorization_level');
+        
+        $Usuarios->update();
+        return redirect()->back();
     }
 
 
@@ -79,5 +61,20 @@ class AdminController extends Controller
         $Usuarios = User::find($id);
         $Usuarios->delete();
         return redirect()->back();
+    }
+
+    /**
+     * Metodo que verifica si algun
+     * dato extraido de $_POST esta vacio
+     * funcion emptyDataValidation() => validacion de datos vacios
+     */
+
+    public function emptyDataValidation($request, $requiredFields){
+        foreach ($requiredFields as $fields) {
+            if (empty(trim($request->input($fields)))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

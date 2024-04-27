@@ -32,7 +32,7 @@
                             <!-- Nested Row within Card Body -->
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Bienvenido(a) - ARNIA</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Iniciar Sesión</h1>
                                 </div>
 
                                 <form action="" method="post">
@@ -60,15 +60,23 @@
                                 <div class="text-justify pt-4">
                                     <hr>
                                     <p>
-                                        <b>RECORDATORIO:</b><br>
-                                        Este sistema es una versión inestable, lo que significa que 
-                                        está propenso a errores, ya que se está probando por primera vez en uso realista, 
-                                        su propósito es obtener información realista, para realizar nuevas pruebas y que 
-                                        lo prueben y sean de gran contribución al proyecto. <br><br>
+                                        <b>Bievenido(a):</b><br>
+                                        A nuestro sistema ARNIA, quien te ayudara a tener un control de la información
+                                        de los miembros de tu congregación, facilitando obtener reportes, diarios, semanales,
+                                        mensuales, estadisticas y notificaciones. Registro y seguimiento en personas evangelizadas,
+                                        entre otras muchas cosas más. <br><br>
 
-                                        Se ha considerado a usted como una persona madura, para el manejo de esta 
-                                        información, por lo cual  se le pide <b>discreción con el proyecto.</b>
+                                        Sin nada mas que decir, puedes iniciar sesión, con el correo y la contraseña que te 
+                                        asigno tu Pastor o Administrador de ARNIA.
                                     </p>
+                                    <footer class="sticky-footer bg-white">
+                                        <div class="container my-auto">
+                                            <div class="copyright text-center my-auto">
+                                                <span>Derechos Reservados &copy; <a href="http://axolotitopc.com" target="_blank" rel="axolotitopc.com">AxolotitoPC &reg; </a>2024</span><br><br>
+                                                <span>Created by <a href="https://www.instagram.com/davidclaymrx/" target="_blank" rel="davidclaymrx">DavidClayMRX</a></span>
+                                            </div>
+                                        </div>
+                                    </footer>
                                 </div>
                             </div>
                         </div>

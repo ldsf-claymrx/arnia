@@ -6,6 +6,8 @@
     }
 @endphp
 
+
+
 @extends('masterdashboard')
 
 @section('title')
@@ -36,10 +38,11 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre(s)</th>
                                 <th>Apellidos</th>
-                                <th>Clave Acceso</th>
                                 <th>Posicion</th>
+                                <th>Activo</th>
                                 <th>Correo</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
@@ -47,10 +50,11 @@
                         </thead>
                         <tfoot>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre(s)</th>
                                 <th>Apellidos</th>
-                                <th>Clave Acceso</th>
                                 <th>Posicion</th>
+                                <th>Activo</th>
                                 <th>Correo</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
@@ -59,12 +63,20 @@
                         <tbody>
                             @foreach ($usuarios as $usuario)
                             <tr>
+                                <td>{{ $usuario->id }}</td>
                                 <td>{{ $usuario->name }}</td>
                                 <td>{{ $usuario->lastname }}</td>
-                                <td>{{ $usuario->key_access }}</td>
                                 <td>{{ $usuario->position }}</td>
+                                <td>
+                                    @if ($usuario->active === 1)
+                                        <span class="badge badge-success">Usuario activo</span>
+                                    @elseif($usuario->active === 2)
+                                        <span class="badge badge-warning">Usuario inactivo</span>
+                                    @endif
+                                </td>
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->authorization_level }}</td>
+                                
                                 <td>
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit{{$usuario->id}}"><i class="fas fa-fw fa-pen"></i></button>
@@ -102,19 +114,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="form-group">
-                                                            <label for="">Clave de Acceso:</label>
-                                                            <input type="text" class="form-control form-control-user" id="key_access" name="key_access" value="{{ $usuario->key_access }}" required>
-                                                        </div>
                             
                                                         <div class="form-group">
                                                             <label for="">Correo Electronico:</label>
                                                             <input type="email" class="form-control form-control-user" id="email" name="email" value="{{ $usuario->email }}" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="">Contraseña:</label>
-                                                            <input type="password" class="form-control form-control-user" id="password" name="password" required>
                                                         </div>
 
                                                         <div class="form-group">
@@ -124,22 +127,22 @@
                                                                         <label for="">Cargo:</label>
                                                                         <select name="position" id="position" class="form-control form-control-user" required>
                                                                             <option value="" selected disabled>--Seleccione una opción--</option>
-                                                                            <option value="Pastorado">Pastorado</option>
-                                                                            <option value="Lider">Líder</option>
-                                                                            <option value="Levita">Levita</option>
-                                                                            <option value="Servidor">Servidor</option>
-                                                                            <option value="Intercesor">Intercesor</option>
-                                                                            <option value="Tester ARNIA">Tester ARNIA</option>
+                                                                            <option value="Pastorado" {{ ($usuario->position == 'Pastorado' ? 'selected' : '') }}>Pastorado</option>
+                                                                            <option value="Lider" {{ ($usuario->position == 'Lider' ? 'selected' : '') }}>Líder</option>
+                                                                            <option value="Levita" {{ ($usuario->position == 'Levita' ? 'selected' : '') }}>Levita</option>
+                                                                            <option value="Servidor" {{ ($usuario->position == 'Servidor' ? 'selected' : '') }}>Servidor</option>
+                                                                            <option value="Intercesor" {{ ($usuario->position == 'Intercesor' ? 'selected' : '') }}>Intercesor</option>
+                                                                            <option value="N/A" {{ ($usuario->position == 'N/A' ? 'selected' : '') }}>Ninguno</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-4">
                                                                     <div class="form-group">
                                                                         <label for="">Activo:</label>
-                                                                        <select name="activo" id="activo" class="form-control form-control-user" required>
+                                                                        <select name="active" id="active" class="form-control form-control-user" required>
                                                                             <option value="" selected disabled>--Seleccione una opción--</option>
-                                                                            <option value="1">Si</option>
-                                                                            <option value="2">No</option>
+                                                                            <option value="1" {{ ($usuario->active == '1' ? 'selected' : '') }}>Si</option>
+                                                                            <option value="2" {{ ($usuario->active == '2' ? 'selected' : '') }}>No</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -148,9 +151,9 @@
                                                                         <label for="">Nivel:</label>
                                                                         <select name="authorization_level" id="authorization_level" class="form-control form-control-user" required>
                                                                             <option value="" selected disabled>--Seleccione una opción--</option>
-                                                                            <option value="SUPERADMIN">Super Administrador</option>
-                                                                            <option value="ADMIN">Administrador</option>
-                                                                            <option value="PERSONAL">Personal</option>
+                                                                            <option value="SUPERADMIN" {{ ($usuario->authorization_level == 'SUPERADMIN' ? 'selected' : '') }}>SUPERADMIN</option>
+                                                                            <option value="ADMIN" {{ ($usuario->authorization_level == 'ADMIN' ? 'selected' : '') }}>ADMIN</option>
+                                                                            <option value="EDITOR" {{ ($usuario->authorization_level == 'EDITOR' ? 'selected' : '') }}>EDITOR</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -227,11 +230,6 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="">Clave de Acceso:</label>
-                                                <input type="text" class="form-control form-control-user" id="key_access" name="key_access" required>
-                                            </div>
-
-                                            <div class="form-group">
                                                 <label for="">Correo Electronico:</label>
                                                 <input type="email" class="form-control form-control-user" id="email" name="email" required>
                                             </div>
@@ -252,14 +250,14 @@
                                                                 <option value="Levita">Levita</option>
                                                                 <option value="Servidor">Servidor</option>
                                                                 <option value="Intercesor">Intercesor</option>
-                                                                <option value="Tester ARNIA">Tester ARNIA</option>
+                                                                <option value="N/A">Ninguna</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-4">
                                                         <div class="form-group">
                                                             <label for="">Activo:</label>
-                                                            <select name="activo" id="activo" class="form-control form-control-user" required>
+                                                            <select name="active" id="active" class="form-control form-control-user" required>
                                                                 <option value="" selected disabled>--Seleccione una opción--</option>
                                                                 <option value="1">Si</option>
                                                                 <option value="2">No</option>
@@ -271,9 +269,9 @@
                                                             <label for="">Nivel:</label>
                                                             <select name="authorization_level" id="authorization_level" class="form-control form-control-user" required>
                                                                 <option value="" selected disabled>--Seleccione una opción--</option>
-                                                                <option value="SUPERADMIN">Super Administrador</option>
-                                                                <option value="ADMIN">Administrador</option>
-                                                                <option value="PERSONAL">Personal</option>
+                                                                <option value="SUPERADMIN">SUPERADMIN</option>
+                                                                <option value="ADMIN">ADMIN</option>
+                                                                <option value="EDITOR">EDITOR</option>
                                                             </select>
                                                         </div>
                                                     </div>
