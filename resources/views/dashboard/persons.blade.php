@@ -28,6 +28,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre(s)</th>
                                 <th>Apellidos</th>
                                 <th>Teléfono</th>
@@ -35,12 +36,14 @@
                                 <th>Dirección</th>
                                 <th>Sexo</th>
                                 <th>Fecha Nacimiento</th>
+                                <th>Categoria</th>
                                 <th>Apodo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre(s)</th>
                                 <th>Apellidos</th>
                                 <th>Teléfono</th>
@@ -48,6 +51,7 @@
                                 <th>Dirección</th>
                                 <th>Sexo</th>
                                 <th>Fecha Nacimiento</th>
+                                <th>Categoria</th>
                                 <th>Apodo</th>
                                 <th>Acciones</th>
                             </tr>
@@ -55,13 +59,33 @@
                         <tbody>
                             @foreach ($persons as $person)
                             <tr>
+                                <td>{{ $person->id }}</td>
                                 <td>{{ $person->name }}</td>
                                 <td>{{ $person->lastname }}</td>
-                                <td>{{ $person->phone_number }}</td>
-                                <td>{{ $person->email }}</td>
+                                <td><a href="tel:{{ $person->phone_number }}">{{ $person->phone_number }}</a></td>
+                                <td><a href="mailto:{{ $person->email }}">{{ $person->email }}</a></td>
                                 <td>{{ $person->address }}</td>
-                                <td>{{ $person->sex }}</td>
+                                <td>
+                                    @if ($person->sex === 1)
+                                        <span class="badge badge-primary">Masculino</span>
+                                    @elseif($person->sex === 2)
+                                        <span class="badge badge-success">Femenino</span>
+                                    @endif
+                                </td>
                                 <td>{{ $person->birthdate }}</td>
+                                <td>
+                                    <center>
+                                    @if ($person->id_category === 1)
+                                        <span class="badge badge-primary">Varones</span>
+                                    @elseif($person->id_category === 2)
+                                        <span class="badge badge-warning">Mujeres</span>
+                                    @elseif($person->id_category === 3)
+                                        <span class="badge badge-success">Jovenes</span>
+                                    @elseif($person->id_category === 4)
+                                        <span class="badge badge-light">Niños</span>
+                                    @endif
+                                    </center>
+                                </td>
                                 <td>{{ $person->nickname }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -140,8 +164,8 @@
                                                                         <label for="">Sexo:*</label>
                                                                         <select name="sex" id="sex" class="form-control form-control-user" required>
                                                                             <option value="0" selected disabled>--Seleccione una opción--</option>
-                                                                            <option value="1">Masculino</option>
-                                                                            <option value="2">Femenino</option>
+                                                                            <option value="1" {{ ($person->sex == '1' ? 'selected' : '') }}>Masculino</option>
+                                                                            <option value="2" {{ ($person->sex == '2' ? 'selected' : '') }}>Femenino</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -151,7 +175,7 @@
                                                                         <select name="id_category" id="id_category" class="form-control form-control-user" required>
                                                                             <option value="0" selected disabled>--Seleccione una opción--</option>
                                                                             @foreach ($categories as $category)
-                                                                            <option value="{{ $category->id }}">{{$category->name }}</option>
+                                                                            <option value="{{ $category->id }}" {{ ($person->id_category == $category->id ? 'selected' : '') }}>{{$category->name }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>

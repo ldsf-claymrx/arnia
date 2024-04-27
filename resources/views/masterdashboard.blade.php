@@ -59,16 +59,35 @@
 
             @if (Auth::user()->authorization_level == "SUPERADMIN")
                 <hr class="sidebar-divider">
-                <div class="sidebar-heading">SUPER ADMIN</div>
+                <div class="sidebar-heading">SUPERADMIN</div>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
-                        <i class="fas fa-fw fa-user"></i>
+                        <i class="fas fa-fw fa-lock"></i>
                         <span>Administrador</span>
                     </a>
                     <div id="collapse0" class="collapse" aria-labelledby="heading0" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">--Opciones--</h6>
                             <a class="collapse-item" href="{{ url('/dashboard/usuariosarnia') }}">Usuarios Sistema</a>
+                        </div>
+                    </div>
+                </li>
+            @endif
+
+            @if (Auth::user()->authorization_level == "SUPERADMIN" || Auth::user()->authorization_level == "ADMIN")
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">DATOS SISTEMA</div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Sistema</span>
+                    </a>
+                    <div id="collapse1" class="collapse" aria-labelledby="heading0" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">--Tablas--</h6>
+                            <a class="collapse-item" href="#">Iglesias</a>
+                            <a class="collapse-item" href="#">Categorias</a>
+                            <a class="collapse-item" href="#">Eventos</a>
                         </div>
                     </div>
                 </li>
@@ -84,11 +103,11 @@
 
             <!-- Nav Item - Usuarios Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Personas</span>
                 </a>
-                <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
+                <div id="collapse2" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">--Opciones--</h6>
                         <a class="collapse-item" href="{{ url('/dashboard/personas') }}">Consultar</a>
