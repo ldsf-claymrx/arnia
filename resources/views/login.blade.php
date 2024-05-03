@@ -7,7 +7,7 @@
         <meta name="description" content="ARNIA">
         <meta name="author" content="Powered by GNoSys&reg;">
 
-        <title>ARNIA | Login</title>
+        <title>CCA | Inicio de Sesión</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -55,24 +55,20 @@
                                     </div>
 
 
-                                    <input type="submit" class="btn btn-warning btn-block" value="Ingresar">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Ingresar">
                                 </form>
                                 <div class="text-justify pt-4">
                                     <hr>
                                     <p>
                                         <b>Bievenido(a):</b><br>
-                                        A nuestro sistema ARNIA, quien te ayudara a tener un control de la información
-                                        de los miembros de tu congregación, facilitando obtener reportes, diarios, semanales,
-                                        mensuales, estadisticas y notificaciones. Registro y seguimiento en personas evangelizadas,
-                                        entre otras muchas cosas más. <br><br>
-
-                                        Sin nada mas que decir, puedes iniciar sesión, con el correo y la contraseña que te 
-                                        asigno tu Pastor o Administrador de ARNIA.
+                                        A nuestro sistema, quien te ayudara a tener un control de la información
+                                        de los miembros de tu congregación, facilitando obtener reportes, estadisticas
+                                        entre muchas cosas más.
                                     </p>
                                     <footer class="sticky-footer bg-white">
                                         <div class="container my-auto">
                                             <div class="copyright text-center my-auto">
-                                                <span>Derechos Reservados &copy; <a href="http://axolotitopc.com" target="_blank" rel="axolotitopc.com">AxolotitoPC &reg; </a>2024</span><br><br>
+                                                <span>Todos los derechos ARNIA&reg; 2024</span><br>
                                                 <span>Created by <a href="https://www.instagram.com/davidclaymrx/" target="_blank" rel="davidclaymrx">DavidClayMRX</a></span>
                                             </div>
                                         </div>

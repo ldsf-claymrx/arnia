@@ -3,62 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Person;
 
 class PersonsController extends Controller
 {
     public function index() {
-        $categories = Category::all();
         $persons = Person::all();
         return view('dashboard.persons', [
-            'categories' => $categories,
             'persons' => $persons
         ]);
     }
 
     public function create(Request $request) {
         try {
-            $Todos = Person::all();
-
-            foreach ($Todos as $t) {
-                if($t->name == $request->input('name') && $t->lastname == $request->input('lastname')) {
-                    return "Esta persona ya esta registrada!";
-                }
-            }
-
             $Person = new Person;
-
-            $Person->name = $request->input('name');
-            $Person->lastname = $request->input('lastname');
-            $Person->phone_number = $request->input('phone_number');
-            $Person->email = $request->input('email');
-            $Person->address = $request->input('address');
+            $Person->name = ucwords(strtolower($request->input('name')));
+            $Person->lastname = ucwords(strtolower($request->input('lastname')));
             $Person->birthdate = $request->input('birthdate');
-            $Person->nickname = $request->input('nickname');
+            $Person->category = $request->input('category');
+            $Person->sex = $request->input('sex');
+            $Person->civil_status = $request->input('civil_status');
+            $Person->address = $request->input('address');
+            $Person->phone_number = $request->input('phone_number');
+            $Person->facebook = $request->input('facebook');
+            $Person->email = $request->input('email');
+            $Person->media = $request->input('media');
+            $Person->personal_invitation = $request->input('personal_invitation');
+            $Person->do_you_congregate = $request->input('do_you_congregate');
+            $Person->reminders = $request->input('reminders');
             $Person->who_registered = $request->input('who_registered'); 
-            
             $Person->date_register = date('Y-m-d');
-            
-            $id_category = $request->input('id_category');
-            $sex = $request->input('sex');
-
-            if($id_category == "0"){
-                return redirect()->back();
-            }
-            else if($sex == "0") {
-                return redirect()->back();
-            }
-            else {
-                $Person->id_category = $id_category;
-                $Person->sex = $sex;
-
-                $Person->save();
-                return redirect('/dashboard/personas');
-            }
+            $Person->save();
+            return redirect()->back();
             
         } catch (\Throwable $th) {
-            
+            return 'Paso un error';
         }
     }
 
@@ -66,37 +45,25 @@ class PersonsController extends Controller
     public function update(Request $request, $id){
         try {
             $Person = Person::find($id);
-
-            $Person->name = $request->input('name');
-            $Person->lastname = $request->input('lastname');
-            $Person->phone_number = $request->input('phone_number');
-            $Person->email = $request->input('email');
-            $Person->address = $request->input('address');
+            $Person->name = ucwords(strtolower($request->input('name')));
+            $Person->lastname = ucwords(strtolower($request->input('lastname')));
             $Person->birthdate = $request->input('birthdate');
-            $Person->nickname = $request->input('nickname');
+            $Person->category = $request->input('category');
+            $Person->sex = $request->input('sex');
+            $Person->civil_status = $request->input('civil_status');
+            $Person->address = $request->input('address');
+            $Person->phone_number = $request->input('phone_number');
+            $Person->facebook = $request->input('facebook');
+            $Person->email = $request->input('email');
+            $Person->media = $request->input('media');
+            $Person->personal_invitation = $request->input('personal_invitation');
+            $Person->do_you_congregate = $request->input('do_you_congregate');
+            $Person->reminders = $request->input('reminders');
+            $Person->update();
+            return redirect()->back();
 
-            
-
-            
-
-            $id_category = $request->input('id_category');
-            $sex = $request->input('sex');
-
-            if($id_category == "0"){
-                return redirect()->back();
-            }
-            else if($sex == "0") {
-                return redirect()->back();
-            }
-            else {
-                $Person->id_category = $id_category;
-                $Person->sex = $sex;
-
-                $Person->update();
-                return redirect('/dashboard/personas');
-            }
         } catch (\Throwable $th) {
-            //return redirect()->back();
+            return 'Paso un error';
         }
     }
 

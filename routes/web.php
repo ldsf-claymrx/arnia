@@ -28,6 +28,11 @@ Route::middleware('auth')->group(function() {
     Route::put('/updateprofile', [DashboardController::class, 'updateMyInfo']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
+    #Paginas de servicio no disponible
+    Route::get('/dashboard/503', function(){
+        return view('dashboard.503');
+    });
+
 
     #Personas Globales para todo el Sistema
     Route::get('/dashboard/personas', [PersonsController::class, 'index']);
@@ -37,10 +42,10 @@ Route::middleware('auth')->group(function() {
 
 
     #Seccion de Eventos - Asignacion de Personas y creación  de eventos
-    Route::get('/dashboard/asignarpersona', [PersonsEventController::class, 'index']);
-    Route::post('/dashboard/asignarpersona', [PersonsEventController::class, 'create']);
-    Route::put('/dashboard/asignarpersona/{id}', [PersonsEventController::class, 'update'])->name('asigperson.update');
-    Route::delete('/dashboard/asignarpersona/{id}', [PersonsEventController::class, 'destroy'])->name('asigperson.destroy');
+    // Route::get('/dashboard/asignarpersona', [PersonsEventController::class, 'index']);
+    // Route::post('/dashboard/asignarpersona', [PersonsEventController::class, 'create']);
+    // Route::put('/dashboard/asignarpersona/{id}', [PersonsEventController::class, 'update'])->name('asigperson.update');
+    // Route::delete('/dashboard/asignarpersona/{id}', [PersonsEventController::class, 'destroy'])->name('asigperson.destroy');
 
     
 });

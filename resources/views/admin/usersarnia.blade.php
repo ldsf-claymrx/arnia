@@ -6,14 +6,12 @@
     }
 @endphp
 
-
-
 @extends('masterdashboard')
 
 @section('title')
     <!-- Custom styles for this page -->
     <link href="{{ url('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <title>ARNIA | Usuarios ARNIA</title>
+    <title>CCA | Usuarios ARNIA</title>
 @endsection
 
 @section('PageContent')
@@ -21,7 +19,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Tabla de Usuarios</h1>
+        <h1 class="h4 mb-2 text-gray-800"><b>Tabla de Usuarios</b></h1>
         <p class="mb-4" style="text-align: justify">
             En esta sección, usted puede visualizar, editar y eliminar los usuarios registrados
             a nivel administrador u/o editor.
@@ -31,7 +29,12 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Usuarios Registrados</h6><br><br>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearusuario"><i class="fas fa-fw fa-check"></i> Registrar un Usuario</button>
+                <a href="" class="btn btn-primary btn-icon-split" type="button" data-toggle="modal" data-target="#crearusuario">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Registrar nuevo usuario</span>
+                </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -43,6 +46,7 @@
                                 <th>Apellidos</th>
                                 <th>Posicion</th>
                                 <th>Activo</th>
+                                <th>Sexo</th>
                                 <th>Correo</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
@@ -55,6 +59,7 @@
                                 <th>Apellidos</th>
                                 <th>Posicion</th>
                                 <th>Activo</th>
+                                <th>Sexo</th>
                                 <th>Correo</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
@@ -72,6 +77,13 @@
                                         <span class="badge badge-success">Usuario activo</span>
                                     @elseif($usuario->active === 2)
                                         <span class="badge badge-warning">Usuario inactivo</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($usuario->sex === 1)
+                                        <span class="badge badge-primary">Masculino</span>
+                                    @elseif($usuario->sex === 2)
+                                        <span class="badge badge-success" style="background: #f3409a">Femenino</span>
                                     @endif
                                 </td>
                                 <td>{{ $usuario->email }}</td>
@@ -118,6 +130,15 @@
                                                         <div class="form-group">
                                                             <label for="">Correo Electronico:</label>
                                                             <input type="email" class="form-control form-control-user" id="email" name="email" value="{{ $usuario->email }}" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="">Sexo:</label>
+                                                            <select name="sex" id="sex" class="form-control form-control-user" required>
+                                                                <option value="" selected disabled>--Seleccione una opción--</option>
+                                                                <option value="1" {{ ($usuario->sex == '1' ? 'selected' : '') }}>Masculino</option>
+                                                                <option value="2" {{ ($usuario->sex == '2' ? 'selected' : '') }}>Femenino</option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="form-group">
@@ -236,6 +257,15 @@
                                             <div class="form-group">
                                                 <label for="">Contraseña:</label>
                                                 <input type="password" class="form-control form-control-user" id="password" name="password" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Sexo:</label>
+                                                <select name="sex" id="sex" class="form-control form-control-user" required>
+                                                    <option value="" selected disabled>--Seleccione una opción--</option>
+                                                    <option value="1">Masculino</option>
+                                                    <option value="2">Femenino</option>
+                                                </select>
                                             </div>
 
                                             <div class="form-group">

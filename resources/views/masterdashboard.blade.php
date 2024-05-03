@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="Viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="GNoSys SA de CV">
+    <meta name="author" content="AxolotitoPC SA de CV">
 
     @yield('title')
 
@@ -41,10 +41,10 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/dashboard') }}">
-                <div class="sidebar-brand-icon rotate-n-15">
+                <div class="sidebar-brand-icon">
                     <img src="{{ asset('img/logo-oficial-transparente-blanco.png') }}" style="width: 30px;" alt="">
                 </div>
-                <div class="sidebar-brand-text mx-3">ARNIA &reg;</div>
+                <div class="sidebar-brand-text mx-3">CCA &reg;</div>
             </a>
 
             <!-- Divider -->
@@ -85,9 +85,8 @@
                     <div id="collapse1" class="collapse" aria-labelledby="heading0" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">--Tablas--</h6>
-                            <a class="collapse-item" href="#">Iglesias</a>
-                            <a class="collapse-item" href="#">Categorias</a>
-                            <a class="collapse-item" href="#">Eventos</a>
+                            <a class="collapse-item" href="{{ url('/dashboard/503') }}">Iglesias</a>
+                            <a class="collapse-item" href="{{ url('/dashboard/503') }}">Eventos</a>
                         </div>
                     </div>
                 </li>
@@ -163,8 +162,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name." ".Auth::user()->lastname }}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{ asset('img/undraw_profile.svg') }}">
+                                @if (Auth::user()->sex === 1)
+                                    <img class="img-profile rounded-circle" src="{{ asset('img/undraw_hombres.svg') }}">
+                                @elseif (Auth::user()->sex === 2)
+                                    <img class="img-profile rounded-circle" src="{{ asset('img/undraw_mujeres.svg') }}">
+                                @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -194,7 +196,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Derechos Reservados &copy; <a href="http://axolotitopc.com" target="_blank" rel="axolotitopc.com">AxolotitoPC &reg; </a>2024</span><br>
+                        <span>Derechos Reservados ARNIA&reg; 2024</span><br>
                         <span>Created by <a href="https://www.instagram.com/davidclaymrx/" target="_blank" rel="davidclaymrx">DavidClayMRX</a></span>
                     </div>
                 </div>

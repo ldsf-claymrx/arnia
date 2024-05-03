@@ -1,7 +1,7 @@
 @extends('masterdashboard')
 
 @section('title')
-    <title>ARNIA | Mi Perfil</title>
+    <title>CCA | Mi Perfil</title>
 @endsection
 
 @section('PageContent')
@@ -9,22 +9,40 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Mi Perfil</h1>
-        <p class="mb-4" style="text-align: justify">
-            Bienvenido <b>{{ Auth::user()->name." ".Auth::user()->lastname }} </b> a la sección de tu perfil, 
-            aqui se encuentra la informacion de tu cuenta de ARNIA, teniendo todo el derecho para actualizarla
-            si algo esta erroneo. Tambien si es la primera vez que entras, te sugerimos, actualizar tu
-            contraseña, esto para no tener la contraseña por defecto, que es 1234. Si el correo es incorrecto,
-            ponte en contacto con el administrador de ARNIA.
-        </p>
+        <h1 class="h4 mb-2 text-gray-800"><b>Mi Perfil</b></h1>
+        <small id="emailHelp" class="form-text text-muted">
+            ¡Hola! Si es la primera vez que ingresas, por seguridad te sugerimos actualizar tu contraseña.
+        </small><br>
 
 
         <!-- Content Row -->
         <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12">
+
+            <div class="col-xl-4 col-lg-4">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Datos de la cuenta - {{ Auth::user()->email }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Foto de perfil</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div style="text-align: center">
+                            @if (Auth::user()->sex === 1)
+                                <img class="img-profile rounded-circle" style="width: 200px" src="{{ asset('img/undraw_hombres.svg') }}">
+                            @elseif (Auth::user()->sex === 2)
+                                <img class="img-profile rounded-circle" style="width: 200px" src="{{ asset('img/undraw_mujeres.svg') }}">
+                            @endif
+                            
+                            <p class="mb-4">JPG or PNG no langer than 5 MB</p>
+                            <input type="submit" class="btn btn-primary btn-user" value="Upload new image" disabled>
+                        </div>
+                    </div>    
+                </div> 
+            </div>
+
+            <div class="col-xl-8 col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Detalles de la Cuenta</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">

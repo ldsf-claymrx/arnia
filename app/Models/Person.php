@@ -16,14 +16,19 @@ class Person extends Model
     protected $fillable = [
         'name',
         'lastname',
-        'phone_number',
-        'email',
-        'address',
-        'sex',
         'birthdate',
-        'nickname',
+        'category',
+        'sex',
+        'civil_status',
+        'address',
+        'phone_number',
+        'facebook',
+        'email',
+        'personal_invitation',
+        'media',
+        'do_you_congregate',
+        'reminders',
         'who_registered',
-        'id_category',
         'date_register'
     ];
 

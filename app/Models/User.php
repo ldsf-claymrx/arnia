@@ -22,6 +22,7 @@ class User extends Authenticatable
         'position',
         'authorization_level',
         'active',
+        'sex',
         'email',
         'password',
     ];

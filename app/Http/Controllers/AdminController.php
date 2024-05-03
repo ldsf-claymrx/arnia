@@ -17,7 +17,7 @@ class AdminController extends Controller
 
     public function create(Request $request) {
 
-        $requiredFields = ['name', 'lastname', 'email', 'password', 'position', 'active', 'authorization_level'];
+        $requiredFields = ['name', 'lastname', 'email', 'password', 'position', 'active', 'sex', 'authorization_level'];
 
         if ($this->emptyDataValidation($request, $requiredFields)) {
             return "Some of the fields are empty!";
@@ -30,6 +30,7 @@ class AdminController extends Controller
         $Usuarios->password = Hash::make($request->input('password'));
         $Usuarios->position = $request->input('position');
         $Usuarios->active = $request->input('active');
+        $Usuarios->sex = $request->input('sex');
         $Usuarios->authorization_level = $request->input('authorization_level');
         $Usuarios->save();
         return redirect()->back();
@@ -39,7 +40,7 @@ class AdminController extends Controller
     public function update(Request $request, $id){
         $Usuarios = User::find($id);
 
-        $requiredFields = ['name', 'lastname', 'email', 'position', 'active', 'authorization_level'];
+        $requiredFields = ['name', 'lastname', 'email', 'position', 'active', 'sex', 'authorization_level'];
 
         if ($this->emptyDataValidation($request, $requiredFields)) {
             return "Some of the fields are empty!";
@@ -50,6 +51,7 @@ class AdminController extends Controller
         $Usuarios->email = $request->input('email');
         $Usuarios->position = $request->input('position');
         $Usuarios->active = $request->input('active');
+        $Usuarios->sex = $request->input('sex');
         $Usuarios->authorization_level = $request->input('authorization_level');
         
         $Usuarios->update();
