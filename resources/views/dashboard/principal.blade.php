@@ -10,9 +10,9 @@
 
         <!-- Page Heading -->
         @if (Auth::user()->sex === 1)
-            <h1 class="h4 mb-2 text-gray-800"><b>Bienvenido {{ Auth::user()->name }}</b></h1>
+            <h1 class="h4 mb-2 text-gray-800"><b>Bienvenido {{ Auth::user()->name." ".Auth::user()->lastname }}</b></h1>
         @elseif (Auth::user()->sex === 2)
-            <h1 class="h4 mb-2 text-gray-800"><b>Bienvenida {{ Auth::user()->name }}</b></h1>
+            <h1 class="h4 mb-2 text-gray-800"><b>Bienvenida {{ Auth::user()->name." ".Auth::user()->lastname }}</b></h1>
         @endif
         <small id="emailHelp" class="form-text text-muted">Graficas y estadisticas de la congregación</small><br>
 

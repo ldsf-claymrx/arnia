@@ -59,7 +59,7 @@
 
             @if (Auth::user()->authorization_level == "SUPERADMIN")
                 <hr class="sidebar-divider">
-                <div class="sidebar-heading">SUPERADMIN</div>
+                <div class="sidebar-heading">Usuarios CCA</div>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
                         <i class="fas fa-fw fa-lock"></i>
@@ -68,25 +68,7 @@
                     <div id="collapse0" class="collapse" aria-labelledby="heading0" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">--Opciones--</h6>
-                            <a class="collapse-item" href="{{ url('/dashboard/usuariosarnia') }}">Usuarios Sistema</a>
-                        </div>
-                    </div>
-                </li>
-            @endif
-
-            @if (Auth::user()->authorization_level == "SUPERADMIN" || Auth::user()->authorization_level == "ADMIN")
-                <hr class="sidebar-divider">
-                <div class="sidebar-heading">DATOS SISTEMA</div>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Sistema</span>
-                    </a>
-                    <div id="collapse1" class="collapse" aria-labelledby="heading0" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">--Tablas--</h6>
-                            <a class="collapse-item" href="{{ url('/dashboard/503') }}">Iglesias</a>
-                            <a class="collapse-item" href="{{ url('/dashboard/503') }}">Eventos</a>
+                            <a class="collapse-item" href="{{ url('/dashboard/usuarios') }}">Usuarios Sistema</a>
                         </div>
                     </div>
                 </li>
@@ -102,11 +84,11 @@
 
             <!-- Nav Item - Usuarios Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Personas</span>
                 </a>
-                <div id="collapse2" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
+                <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">--Opciones--</h6>
                         <a class="collapse-item" href="{{ url('/dashboard/personas') }}">Consultar</a>
@@ -114,6 +96,35 @@
                     </div>
                 </div>
             </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Ministerios
+            </div>
+
+            <!-- Nav Item - Usuarios Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Jovénes</span>
+                </a>
+                <div id="collapse2" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">--Opciones--</h6>
+                        <a class="collapse-item" href="{{ url('/dashboard/jovenes') }}">Asistencia</a>
+                        <a class="collapse-item" href="{{ url('/dashboard/503') }}">Reportes</a>
+                    </div>
+                </div>
+            </li>
+
+            
+
+
+
 
 
 
@@ -169,13 +180,19 @@
                                 @endif
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ url('/dashboard/perfil') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Mi Perfil
                                 </a>
+
+                                @if (Auth::user()->authorization_level == "SUPERADMIN" || Auth::user()->authorization_level == "ADMIN")
+                                    <a class="dropdown-item" href="{{ url('/dashboard/503') }}"><i class="fas fa-fw fa-church fa-sm fa-fw mr-2 text-gray-400"></i> Iglesias </a>
+                                    <a class="dropdown-item" href="{{ url('/dashboard/503') }}"><i class="fas fa-fw fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Eventos </a>
+                                @endif
+
                                 <div class="dropdown-divider"></div>
+                                
                                 <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Cerrar Sesión

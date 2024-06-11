@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function index() {
         $usuarios = User::all();
-        return view('admin.usersarnia', [
+        return view('admin.usersys', [
             'usuarios' => $usuarios
         ]);
     }

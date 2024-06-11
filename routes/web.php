@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonsController;
 use App\Http\Controllers\PersonsEventController;
+use App\Http\Controllers\YoungController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'authLogin']);
@@ -17,10 +18,10 @@ Route::middleware('auth')->group(function() {
 
 
     #Rutas Administrador
-    Route::get('/dashboard/usuariosarnia', [AdminController::class, 'index']);
-    Route::post('/dashboard/usuariosarnia', [AdminController::class, 'create']);
-    Route::put('/dashboard/usuariosarnia/{id}', [AdminController::class, 'update'])->name('userarnia.update');
-    Route::delete('/dashboard/usuariosarnia/{id}', [AdminController::class, 'destroy'])->name('userarnia.destroy');
+    Route::get('/dashboard/usuarios', [AdminController::class, 'index']);
+    Route::post('/dashboard/usuarios', [AdminController::class, 'create']);
+    Route::put('/dashboard/usuarios/{id}', [AdminController::class, 'update'])->name('usersys.update');
+    Route::delete('/dashboard/usuarios/{id}', [AdminController::class, 'destroy'])->name('usersys.destroy');
 
 
     #Perfil del usuario Autentificado
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function() {
     Route::post('/dashboard/personas', [PersonsController::class, 'create']);
     Route::put('/dashboard/personas/{id}', [PersonsController::class, 'update'])->name('person.update');
     Route::delete('/dashboard/personas/{id}', [PersonsController::class, 'destroy'])->name('person.destroy');
+
+    Route::get('/dashboard/jovenes', [YoungController::class, 'index']);
+    Route::post('/dashboard/jovenes', [YoungController::class, 'create']);
 
 
     #Seccion de Eventos - Asignacion de Personas y creación  de eventos

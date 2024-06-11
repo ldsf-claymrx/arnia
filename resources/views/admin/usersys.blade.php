@@ -11,7 +11,7 @@
 @section('title')
     <!-- Custom styles for this page -->
     <link href="{{ url('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <title>CCA | Usuarios ARNIA</title>
+    <title>CCA | Usuarios</title>
 @endsection
 
 @section('PageContent')
@@ -99,7 +99,7 @@
                                 <div class="modal fade" id="edit{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('userarnia.update', $usuario->id) }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('usersys.update', $usuario->id) }}" method="POST" enctype="multipart/form-data">
                                                 <div class="card shadow mb-4">
                                                     <!-- Card Header - Dropdown -->
                                                     <div class="card-header py-3">
@@ -194,7 +194,7 @@
                                 <div class="modal fade" id="delete{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('userarnia.destroy', $usuario->id) }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('usersys.destroy', $usuario->id) }}" method="POST" enctype="multipart/form-data">
                                                 <div class="card shadow mb-4">
                                                     <!-- Card Header - Dropdown -->
                                                     <div class="card-header py-3">
@@ -224,7 +224,7 @@
                     <div class="modal fade" id="crearusuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="{{ url('/dashboard/usuariosarnia') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ url('/dashboard/usuarios') }}" method="POST" enctype="multipart/form-data">
                                     <div class="card shadow mb-4">
                                         <!-- Card Header - Dropdown -->
                                         <div class="card-header py-3">
