@@ -25,6 +25,15 @@
             a nivel administrador u/o editor.
         </p>
 
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    icon: "success",
+                    title: `{{ session('success') }}`
+                });
+            </script>
+        @endif
+
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">

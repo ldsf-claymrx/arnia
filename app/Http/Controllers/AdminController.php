@@ -33,7 +33,7 @@ class AdminController extends Controller
         $Usuarios->sex = $request->input('sex');
         $Usuarios->authorization_level = $request->input('authorization_level');
         $Usuarios->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', '¡Usuario Registrado con Exito!');
     }
 
 
@@ -55,14 +55,14 @@ class AdminController extends Controller
         $Usuarios->authorization_level = $request->input('authorization_level');
         
         $Usuarios->update();
-        return redirect()->back();
+        return redirect()->back()->with('success', '¡Informacion del Usuario Actualizado!');
     }
 
 
     public function destroy($id) {
         $Usuarios = User::find($id);
         $Usuarios->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', '¡Usuario Eliminado con Exito!');
     }
 
     /**

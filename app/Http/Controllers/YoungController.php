@@ -18,9 +18,10 @@ class YoungController extends Controller
     public function create(Request $request) {
         $Young = new Young;
         $Young->id_person = $request->input('id_person');
+        $name = $request->input('name');
         $Young->date_assitance = date('Y-m-d');
         $Young->who_registered = $request->input('who_registered');
         $Young->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
     }
 }
