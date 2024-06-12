@@ -124,13 +124,28 @@
             <!-- Nav Item - Usuarios Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-                    <i class="fas fa-fw fa-users"></i>
+                    <i class="fas fa-fw fa-male"></i>
                     <span>Varones</span>
                 </a>
                 <div id="collapse3" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">--Opciones--</h6>
                         <a class="collapse-item" href="{{ url('/dashboard/varones') }}">Asistencia</a>
+                        <a class="collapse-item" href="{{ url('/dashboard/503') }}">Reportes</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Usuarios Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                    <i class="fas fa-fw fa-female"></i>
+                    <span>Mujeres</span>
+                </a>
+                <div id="collapse4" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">--Opciones--</h6>
+                        <a class="collapse-item" href="{{ url('/dashboard/mujeres') }}">Asistencia</a>
                         <a class="collapse-item" href="{{ url('/dashboard/503') }}">Reportes</a>
                     </div>
                 </div>

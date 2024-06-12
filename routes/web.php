@@ -8,6 +8,7 @@ use App\Http\Controllers\PersonsController;
 use App\Http\Controllers\PersonsEventController;
 use App\Http\Controllers\YoungController;
 use App\Http\Controllers\MenController;
+use App\Http\Controllers\WomanController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'authLogin']);
@@ -42,11 +43,17 @@ Route::middleware('auth')->group(function() {
     Route::put('/dashboard/personas/{id}', [PersonsController::class, 'update'])->name('person.update');
     Route::delete('/dashboard/personas/{id}', [PersonsController::class, 'destroy'])->name('person.destroy');
 
+    #Ministerio de Jovenes
     Route::get('/dashboard/jovenes', [YoungController::class, 'index']);
     Route::post('/dashboard/jovenes', [YoungController::class, 'create']);
 
+    #Ministerio de Varones
     Route::get('/dashboard/varones', [MenController::class, 'index']);
     Route::post('/dashboard/varones', [MenController::class, 'create']);
+
+    #Ministario de Mujeres
+    Route::get('/dashboard/mujeres', [WomanController::class, 'index']);
+    Route::post('/dashboard/mujeres', [WomanController::class, 'create']);
 
 
     #Seccion de Eventos - Asignacion de Personas y creación  de eventos
