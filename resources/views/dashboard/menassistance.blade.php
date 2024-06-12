@@ -3,7 +3,7 @@
 @section('title')
     <!-- Custom styles for this page -->
     <link href="{{ url('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <title>CCA - Jovénes</title>
+    <title>CCA - Varones</title>
 @endsection
 
 @section('PageContent')
@@ -11,9 +11,9 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h4 mb-2 text-gray-800"><b>Asistencia de Jovénes</b></h1>
+        <h1 class="h4 mb-2 text-gray-800"><b>Asistencia de Varones</b></h1>
         <p class="mb-4" style="text-align: justify">
-            En esta sección, usted puede tomar asistencia de los Jovénes que entran al culto
+            En esta sección, usted puede tomar asistencia de los varones que entran al culto
             a nivel administrador u/o editor.
         </p>
 
@@ -29,7 +29,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Jovénes Registrados</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Varones Registrados</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -72,7 +72,7 @@
                                 <div class="modal fade" id="assistence{{$person->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ url('/dashboard/jovenes') }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ url('/dashboard/varones') }}" method="POST" enctype="multipart/form-data">
                                                 <div class="card shadow mb-4">
                                                     <!-- Card Header - Dropdown -->
                                                     <div class="card-header py-3">
@@ -83,7 +83,7 @@
                                                         @csrf                                                        
                                                         <label>
                                                             Estas por confirmar la asistencia de {{ $person->name." ".$person->lastname }}, 
-                                                            al culto de Jovenes; se registrara: @php echo date('d-m-Y'); @endphp
+                                                            al culto de Varones; se registrara: @php echo date('d-m-Y'); @endphp
                                                             <br><br>
                                                             ¿Confirmas su asistencia?
                                                         </label>

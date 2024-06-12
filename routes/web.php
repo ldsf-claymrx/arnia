@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonsController;
 use App\Http\Controllers\PersonsEventController;
 use App\Http\Controllers\YoungController;
+use App\Http\Controllers\MenController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'authLogin']);
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/dashboard/jovenes', [YoungController::class, 'index']);
     Route::post('/dashboard/jovenes', [YoungController::class, 'create']);
+
+    Route::get('/dashboard/varones', [MenController::class, 'index']);
+    Route::post('/dashboard/varones', [MenController::class, 'create']);
 
 
     #Seccion de Eventos - Asignacion de Personas y creación  de eventos
