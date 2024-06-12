@@ -9,7 +9,7 @@ use App\Models\Young;
 class YoungController extends Controller
 {
     public function index() {
-        $persons = Person::select('id', 'name', 'lastname', 'category', 'sex', 'phone_number')->where('category', 3)->get();
+        $persons = Person::select('id', 'name', 'lastname', 'category', 'sex', 'phone_number')->whereIn('category', [3, 4])->get();
         return view('dashboard.youthassistance', [
             'persons' => $persons
         ]);
