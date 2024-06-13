@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Person;
 use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
     public function index(){
-        return view('dashboard.principal');
+        $persons_total = Person::count();
+        $varones = Person::where('category', 1)->count();
+        $mujeres = Person::where('category', 2)->count();
+        $jovenes = Person::whereIn('category', [3, 4])->count();
+
+        return view('dashboard.principal', [
+            'persons_total' => $persons_total,
+            'varones' => $varones,
+            'mujeres' => $mujeres,
+            'jovenes' => $jovenes
+        ]);
     }
 
     public function showprofile() {
