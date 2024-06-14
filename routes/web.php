@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/dashboard/personas', [PersonsController::class, 'create']);
     Route::put('/dashboard/personas/{id}', [PersonsController::class, 'update'])->name('person.update');
     Route::delete('/dashboard/personas/{id}', [PersonsController::class, 'destroy'])->name('person.destroy');
+    Route::get('/dashboard/download-birthdays', [PersonsController::class, 'getBirthdayOfTheMonthPDF']);
 
     #Ministerio de Jovenes
     Route::get('/dashboard/jovenes', [YoungController::class, 'index']);

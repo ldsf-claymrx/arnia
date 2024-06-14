@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Person;
+use Carbon\Carbon;
+use PDF;
 
 class PersonsController extends Controller
 {
@@ -81,5 +83,16 @@ class PersonsController extends Controller
         } catch (\Throwable $th) {
             
         }
+    }
+
+    public function getBirthdayOfTheMonthPDF() {
+        $currentMonth = Carbon::now()->month;
+        $personsWithBirthdays = Person::whereMonth('birthdate', $currentMonth)->orderBy('birthdate', 'asc')->get();
+
+        $pdf = PDF::loadView('dashboard.birthdays', [
+            'personsWithBirthdays' => $personsWithBirthdays
+        ]);
+
+        return $pdf->download('cumpleaños_del_mes.pdf');
     }
 }

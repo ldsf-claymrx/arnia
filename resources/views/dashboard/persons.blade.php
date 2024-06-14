@@ -42,6 +42,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Personas Registradas</h6><br><br>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearpersona"><i class="fas fa-fw fa-check"></i> Registrar una persona</button>
+                <a href="{{ url('/dashboard/download-birthdays') }}" class="btn btn-success btn-icon-split"><span class="icon text-white-50"><i class="fas fa-birthday-cake"></i></span><span class="text">Cumpleaños PDF</span></a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
