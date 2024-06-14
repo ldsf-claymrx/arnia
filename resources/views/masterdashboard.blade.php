@@ -116,7 +116,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">--Opciones--</h6>
                         <a class="collapse-item" href="{{ url('/dashboard/jovenes') }}">Asistencia</a>
-                        <a class="collapse-item" href="{{ url('/dashboard/503') }}">Reportes</a>
+                        <a class="collapse-item" href="{{ url('/dashboard/jovenes-reporte') }}">Reportes</a>
                     </div>
                 </div>
             </li>

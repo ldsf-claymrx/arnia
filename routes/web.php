@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function() {
     #Ministerio de Jovenes
     Route::get('/dashboard/jovenes', [YoungController::class, 'index']);
     Route::post('/dashboard/jovenes', [YoungController::class, 'create']);
+    Route::get('/dashboard/jovenes-reporte', [YoungController::class, 'getInassistance']);
+    Route::get('/dashboard/download-report-young', [YoungController::class, 'generatePDF']);
 
     #Ministerio de Varones
     Route::get('/dashboard/varones', [MenController::class, 'index']);
