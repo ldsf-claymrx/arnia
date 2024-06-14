@@ -32,7 +32,14 @@
                 La informacion mostrada es un reporte de la inasistencia al culto de jovenes,
                 este reporte es mensual, por lo que puede marcar falta a fechas que aun no hemos llegado,
                 este reporte tiene como fecha inicial: <b>{{ $start_date }}</b> y tiene como fecha final: <b>{{ $end_date }}</b>
-
+            </p>
+        @elseif($category == 1)
+            <!-- Page Heading -->
+            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Varones - Faltas</b></h1>
+            <p class="mb-4" style="text-align: justify">
+                La informacion mostrada es un reporte de la inasistencia al culto de varones,
+                este reporte es mensual, por lo que puede marcar falta a fechas que aun no hemos llegado,
+                este reporte tiene como fecha inicial: <b>{{ $start_date }}</b> y tiene como fecha final: <b>{{ $end_date }}</b>
             </p>
         @endif
 
@@ -41,6 +48,8 @@
             <div class="card-header py-3">
                 @if ($category == 3)
                     <a href="{{ url('/dashboard/download-report-young') }}" class="btn btn-primary btn-icon-split"><span class="icon text-white-50"><i class="fas fa-download"></i></span><span class="text">Descargar PDF</span></a>
+                @elseif($category == 1)
+                    <a href="{{ url('/dashboard/download-report-men') }}" class="btn btn-primary btn-icon-split"><span class="icon text-white-50"><i class="fas fa-download"></i></span><span class="text">Descargar PDF</span></a>
                 @endif
             </div>
             <div class="card-body">

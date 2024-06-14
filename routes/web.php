@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function() {
     #Ministerio de Varones
     Route::get('/dashboard/varones', [MenController::class, 'index']);
     Route::post('/dashboard/varones', [MenController::class, 'create']);
+    Route::get('/dashboard/varones-reporte', [MenController::class, 'getInassistance']);
+    Route::get('/dashboard/download-report-men', [MenController::class, 'generatePDF']);
 
     #Ministario de Mujeres
     Route::get('/dashboard/mujeres', [WomanController::class, 'index']);
