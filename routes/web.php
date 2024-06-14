@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function() {
     #Ministario de Mujeres
     Route::get('/dashboard/mujeres', [WomanController::class, 'index']);
     Route::post('/dashboard/mujeres', [WomanController::class, 'create']);
+    Route::get('/dashboard/mujeres-reporte', [WomanController::class, 'getInassistance']);
+    Route::get('/dashboard/download-report-woman', [WomanController::class, 'generatePDF']);
 
 
     #Seccion de Eventos - Asignacion de Personas y creación  de eventos

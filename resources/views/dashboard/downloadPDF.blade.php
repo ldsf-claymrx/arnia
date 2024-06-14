@@ -31,6 +31,8 @@
                 <h1>Ministerio de Jovenes - Faltas</h1>
             @elseif($category == 1)
                 <h1>Ministerio de Varones - Faltas</h1>
+            @elseif($category == 2)
+                <h1>Ministerio de Mujeres - Faltas</h1>
             @endif
             <h3>Fecha inicial: <b>{{ $start_date }}</b></h3>
             <h3>Fecha final: <b>{{ $end_date }}</b></h3>
