@@ -27,27 +27,24 @@
 
         @if ($category == 3)
             <!-- Page Heading -->
-            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Jovenes - Faltas</b></h1>
+            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio Juvenil</b></h1>
             <p class="mb-4" style="text-align: justify">
-                La informacion mostrada es un reporte de la inasistencia al culto de jovenes,
-                este reporte es mensual, por lo que puede marcar falta a fechas que aun no hemos llegado,
-                este reporte tiene como fecha inicial: <b>{{ $start_date }}</b> y tiene como fecha final: <b>{{ $end_date }}</b>
+                Reporte de inasistencias al culto de jovénes, las fechas seleccionadas para generar este reporte
+                automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
             </p>
         @elseif($category == 1)
             <!-- Page Heading -->
-            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Varones - Faltas</b></h1>
+            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Varones</b></h1>
             <p class="mb-4" style="text-align: justify">
-                La informacion mostrada es un reporte de la inasistencia al culto de varones,
-                este reporte es mensual, por lo que puede marcar falta a fechas que aun no hemos llegado,
-                este reporte tiene como fecha inicial: <b>{{ $start_date }}</b> y tiene como fecha final: <b>{{ $end_date }}</b>
+                Reporte de inasistencias al culto de varones, las fechas seleccionadas para generar este reporte
+                automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
             </p>
         @elseif($category == 2)
             <!-- Page Heading -->
-            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Mujeres - Faltas</b></h1>
+            <h1 class="h4 mb-2 text-gray-800"><b>Ministerio de Damas</b></h1>
             <p class="mb-4" style="text-align: justify">
-                La informacion mostrada es un reporte de la inasistencia al culto de mujeres,
-                este reporte es mensual, por lo que puede marcar falta a fechas que aun no hemos llegado,
-                este reporte tiene como fecha inicial: <b>{{ $start_date }}</b> y tiene como fecha final: <b>{{ $end_date }}</b>
+                Reporte de inasistencias al culto de jovénes, las fechas seleccionadas para generar este reporte
+                automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
             </p>
         @endif
 
@@ -65,10 +62,10 @@
             <div class="card-body">
                 @foreach($data as $record)
                     <div class="record">
-                        <div class="name">{{ $record->name }}</div>
+                        <div class="name">{{ $record->name." ".$record->lastname }}</div>
                         <div class="dates">
-                            Fechas de faltas: <b>{{ implode('-----', $record->dates) }}</b><br>
-                            Total de faltas: <b>{{ count($record->dates) }}</b>
+                            Tiene en total: <b>{{ count($record->dates) }}</b> faltas<br>
+                            Dias que faltó: <b>{{ implode(' ----- ', $record->dates) }}</b>
                         </div>
                     </div>
                 @endforeach

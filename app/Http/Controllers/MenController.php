@@ -22,57 +22,53 @@ class MenController extends Controller
         $Men = new Men;
         $Men->id_person = $request->input('id_person');
         $name = $request->input('name');
-        $Men->date_assitance = date('Y-m-d');
+        $Men->date_assitance = Carbon::now();
         $Men->who_registered = $request->input('who_registered');
         $Men->save();
         return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
     }
 
-    public function getSaturdays() {
+    public function getTuesday() {
         $start_date = Carbon::now()->startOfMonth();
-        $end_date = Carbon::now()->endOfMonth();
+        $end_date = Carbon::now();
 
         
-        $saturdays = [];
+        $tuesdays = [];
 
         
         while ($start_date->lte($end_date)) {
-            if ($start_date->isSaturday()) {
-                $saturdays[] = $start_date->toDateString();
+            if ($start_date->isTuesday()) {
+                $tuesdays[] = $start_date->toDateString();
             }
             $start_date->addDay();
         }
-        return $saturdays;
+        return $tuesdays;
     }
 
     public function getInassistance() {
 
-        $fechas = $this->getSaturdays();
+        $fechas = $this->getTuesday();
 
-        $sabadosSql = implode(' UNION ', array_map(function ($fecha) {
+        $TuesdaySQL = implode(' UNION ', array_map(function ($fecha) {
             return "SELECT '$fecha' AS fecha";
         }, $fechas));
 
         $sql = "
-            WITH Sabados AS (
-                $sabadosSql
+            WITH Martes AS (
+                $TuesdaySQL
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                SELECT p.id, p.name, p.lastname, m.fecha FROM persons p
+                CROSS JOIN Martes m LEFT JOIN menAssistance r ON p.id = r.id_person AND r.date_assitance = m.fecha
                 WHERE r.id IS NULL and p.category = 1
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -83,6 +79,7 @@ class MenController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -93,38 +90,34 @@ class MenController extends Controller
         return view('dashboard.report', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 1
         ]);
     }
 
     public function generatePDF() {
-        $fechas = $this->getSaturdays();
+        $fechas = $this->getTuesday();
 
-        $sabadosSql = implode(' UNION ', array_map(function ($fecha) {
+        $TuesdaySQL = implode(' UNION ', array_map(function ($fecha) {
             return "SELECT '$fecha' AS fecha";
         }, $fechas));
 
         $sql = "
-            WITH Sabados AS (
-                $sabadosSql
+            WITH Martes AS (
+                $TuesdaySQL
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                SELECT p.id, p.name, p.lastname, m.fecha FROM persons p
+                CROSS JOIN Martes m LEFT JOIN menAssistance r ON p.id = r.id_person AND r.date_assitance = m.fecha
                 WHERE r.id IS NULL and p.category = 1
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -135,6 +128,7 @@ class MenController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -144,10 +138,10 @@ class MenController extends Controller
         $pdf = PDF::loadView('dashboard.downloadPDF', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 1
         ]);
 
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte-varones.pdf');
     }
 }

@@ -8,7 +8,7 @@
             .container {
                 width: 100%;
                 margin: 0 auto;
-                padding: 20px;
+                padding: 12px;
             }
             .record {
                 margin-bottom: 20px;
@@ -28,21 +28,35 @@
     <body>
         <div class="container">
             @if ($category == 3)
-                <h1>Ministerio de Jovenes - Faltas</h1>
+                <h2 style="text-align: center">-- Ministerio Juvenil --</h2>
+                <br>
+                <div>
+                    Reporte de inasistencias al culto de jovénes, las fechas seleccionadas
+                    para generar este reporte automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
+                </div>
+
             @elseif($category == 1)
-                <h1>Ministerio de Varones - Faltas</h1>
+                <h2 style="text-align: center">-- Ministerio de Varones --</h2>
+                <br>
+                <div>
+                    Reporte de inasistencias al culto de varones, las fechas seleccionadas
+                    para generar este reporte automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
+                </div>
             @elseif($category == 2)
-                <h1>Ministerio de Mujeres - Faltas</h1>
+                <h2 style="text-align: center">-- Ministerio de Damas --</h2>
+                <br>
+                <div>
+                    Reporte de inasistencias al culto de mujeres, las fechas seleccionadas
+                    para generar este reporte automaticamente son: <b>{{ $start_date->format('d-m-Y') }}</b> hasta el <b>{{ $end_date->format('d-m-Y') }}</b>
+                </div>
             @endif
-            <h3>Fecha inicial: <b>{{ $start_date }}</b></h3>
-            <h3>Fecha final: <b>{{ $end_date }}</b></h3>
-            <br><br><br>
+            <br><br>
             @foreach($data as $record)
                 <div class="record">
-                    <div class="name">{{ $record->name }}</div>
+                    <div class="name">{{ $record->name." ".$record->lastname }}</div>
                     <div class="dates">
-                        Fechas de faltas: <b>{{ implode('-----', $record->dates) }}</b><br>
-                        Total de faltas: <b>{{ count($record->dates) }}</b>
+                        Tiene en total: <b>{{ count($record->dates) }}</b> faltas<br>
+                        Dias que faltó: <b>{{ implode(' ----- ', $record->dates) }}</b>
                     </div>
                 </div>
             @endforeach

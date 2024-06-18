@@ -22,7 +22,7 @@ class YoungController extends Controller
         $Young = new Young;
         $Young->id_person = $request->input('id_person');
         $name = $request->input('name');
-        $Young->date_assitance = date('Y-m-d');
+        $Young->date_assitance = Carbon::now();
         $Young->who_registered = $request->input('who_registered');
         $Young->save();
         return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
@@ -31,8 +31,7 @@ class YoungController extends Controller
     public function getSaturdays()
     {
         $start_date = Carbon::now()->startOfMonth();
-        $end_date = Carbon::now()->endOfMonth();
-
+        $end_date = Carbon::now();
         
         $saturdays = [];
 
@@ -59,21 +58,17 @@ class YoungController extends Controller
                 $sabadosSql
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
-                WHERE r.id IS NULL and p.category in (3, 4)
+                SELECT p.id, p.name, p.lastname, s.fecha FROM persons p
+                CROSS JOIN Sabados s LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                WHERE r.id IS NULL and p.category in (3,4)
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -84,6 +79,7 @@ class YoungController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -94,7 +90,7 @@ class YoungController extends Controller
         return view('dashboard.report', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 3
         ]);
     }
@@ -111,21 +107,17 @@ class YoungController extends Controller
                 $sabadosSql
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
-                WHERE r.id IS NULL and p.category in (3, 4)
+                SELECT p.id, p.name, p.lastname, s.fecha FROM persons p
+                CROSS JOIN Sabados s LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                WHERE r.id IS NULL and p.category in (3,4)
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -136,6 +128,7 @@ class YoungController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -145,10 +138,10 @@ class YoungController extends Controller
         $pdf = PDF::loadView('dashboard.downloadPDF', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 3
         ]);
 
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte-jovenes.pdf');
     }
 }

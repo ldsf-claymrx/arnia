@@ -22,55 +22,51 @@ class WomanController extends Controller
         $Woman = new Woman;
         $Woman->id_person = $request->input('id_person');
         $name = $request->input('name');
-        $Woman->date_assitance = date('Y-m-d');
+        $Woman->date_assitance = Carbon::now();
         $Woman->who_registered = $request->input('who_registered');
         $Woman->save();
         return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
     }
 
-    public function getSaturdays() {
+    public function getWednesday() {
         $start_date = Carbon::now()->startOfMonth();
-        $end_date = Carbon::now()->endOfMonth();
+        $end_date = Carbon::now();
 
-        $saturdays = [];
+        $wednesdays = [];
         
         while ($start_date->lte($end_date)) {
-            if ($start_date->isSaturday()) {
-                $saturdays[] = $start_date->toDateString();
+            if ($start_date->isWednesday()) {
+                $wednesdays[] = $start_date->toDateString();
             }
             $start_date->addDay();
         }
-        return $saturdays;
+        return $wednesdays;
     }
 
     public function getInassistance() {
 
-        $fechas = $this->getSaturdays();
+        $fechas = $this->getWednesday();
 
-        $sabadosSql = implode(' UNION ', array_map(function ($fecha) {
+        $miercolesSQL = implode(' UNION ', array_map(function ($fecha) {
             return "SELECT '$fecha' AS fecha";
         }, $fechas));
 
         $sql = "
-            WITH Sabados AS (
-                $sabadosSql
+            WITH Miercoles AS (
+                $miercolesSQL
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                SELECT p.id, p.name, p.lastname, m.fecha FROM persons p
+                CROSS JOIN Miercoles m LEFT JOIN womanAssistance r ON p.id = r.id_person AND r.date_assitance = m.fecha
                 WHERE r.id IS NULL and p.category = 2
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -81,6 +77,7 @@ class WomanController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -91,38 +88,34 @@ class WomanController extends Controller
         return view('dashboard.report', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 2
         ]);
     }
 
     public function generatePDF() {
-        $fechas = $this->getSaturdays();
+        $fechas = $this->getWednesday();
 
-        $sabadosSql = implode(' UNION ', array_map(function ($fecha) {
+        $miercolesSQL = implode(' UNION ', array_map(function ($fecha) {
             return "SELECT '$fecha' AS fecha";
         }, $fechas));
 
         $sql = "
-            WITH Sabados AS (
-                $sabadosSql
+            WITH Miercoles AS (
+                $miercolesSQL
             ),
             Inasistencias AS (
-                SELECT p.id, p.name, s.fecha, 'No Asistió' AS estado 
-                FROM persons p
-                CROSS JOIN Sabados s 
-                LEFT JOIN youthAssistance r ON p.id = r.id_person AND r.date_assitance = s.fecha
+                SELECT p.id, p.name, p.lastname, m.fecha FROM persons p
+                CROSS JOIN Miercoles m LEFT JOIN womanAssistance r ON p.id = r.id_person AND r.date_assitance = m.fecha
                 WHERE r.id IS NULL and p.category = 2
             ),
             ConteoInasistencias AS (
-                SELECT id, name, COUNT(*) AS total_inasistencias 
-                FROM Inasistencias
-                GROUP BY id, name
+                SELECT id, name, COUNT(*) AS total_inasistencias FROM Inasistencias
+                GROUP BY id, name, lastname
             )
-            SELECT ni.name, ni.fecha, ni.estado, ci.total_inasistencias 
-            FROM Inasistencias ni
+            SELECT ni.name, ni.lastname, ni.fecha, ci.total_inasistencias FROM Inasistencias ni
             LEFT JOIN ConteoInasistencias ci ON ni.id = ci.id
-            ORDER BY name, total_inasistencias DESC, fecha;
+            ORDER BY total_inasistencias DESC, name, lastname, fecha;
         ";
 
         $results = DB::select($sql);
@@ -133,6 +126,7 @@ class WomanController extends Controller
             if (!isset($data[$result->name])) {
                 $data[$result->name] = (object)[
                     'name' => $result->name,
+                    'lastname' => $result->lastname,
                     'dates' => []
                 ];
             }
@@ -142,10 +136,10 @@ class WomanController extends Controller
         $pdf = PDF::loadView('dashboard.downloadPDF', [
             'data' => $data,
             'start_date' => Carbon::now()->startOfMonth(),
-            'end_date' => Carbon::now()->endOfMonth(),
+            'end_date' => Carbon::now(),
             'category' => 2
         ]);
 
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte-mujeres.pdf');
     }
 }
