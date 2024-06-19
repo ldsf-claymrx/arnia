@@ -12,7 +12,7 @@ use PDF;
 class MenController extends Controller
 {
     public function index() {
-        $persons = Person::select('id', 'name', 'lastname', 'category', 'sex', 'phone_number')->where('category', 1)->get();
+        $persons = Person::select('id', 'name', 'lastname', 'category', 'sex', 'phone_number')->whereIn('category', [1, 3])->get();
         return view('dashboard.menassistance', [
             'persons' => $persons
         ]);
