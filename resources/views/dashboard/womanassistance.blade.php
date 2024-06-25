@@ -25,6 +25,15 @@
                 });
             </script>
         @endif
+
+        @if(session('error'))
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: `{{ session('error') }}`
+                });
+            </script>
+        @endif
         
         <!-- DataTales Example -->
         <div class="card shadow mb-4">

@@ -19,13 +19,23 @@ class YoungController extends Controller
     }
 
     public function create(Request $request) {
-        $Young = new Young;
-        $Young->id_person = $request->input('id_person');
-        $name = $request->input('name');
-        $Young->date_assitance = Carbon::now();
-        $Young->who_registered = $request->input('who_registered');
-        $Young->save();
-        return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
+
+        $id_search = $request->input('id_person');
+        $current_date = Carbon::now()->toDateString();
+        
+        $recorded_assists = Young::where('id_person', $id_search)->whereDate('date_assitance', $current_date)->first();
+
+        if($recorded_assists) {
+            return redirect()->back()->with('error', 'No se puede confirmar dos veces a la misma persona');
+        } else {
+            $Young = new Young;
+            $Young->id_person = $request->input('id_person');
+            $name = $request->input('name');
+            $Young->date_assitance = Carbon::now();
+            $Young->who_registered = $request->input('who_registered');
+            $Young->save();
+            return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
+        }
     }
 
     public function getSaturdays()

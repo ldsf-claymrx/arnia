@@ -19,13 +19,23 @@ class MenController extends Controller
     }
 
     public function create(Request $request) {
-        $Men = new Men;
-        $Men->id_person = $request->input('id_person');
-        $name = $request->input('name');
-        $Men->date_assitance = Carbon::now();
-        $Men->who_registered = $request->input('who_registered');
-        $Men->save();
-        return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
+
+        $id_search = $request->input('id_person');
+        $current_date = Carbon::now()->toDateString();
+
+        $recorded_assists = Men::where('id_person', $id_search)->whereDate('date_assitance', $current_date)->first();
+
+        if ($recorded_assists) {
+            return redirect()->back()->with('error', 'No se puede confirmar dos veces a la misma persona');
+        } else {
+            $Men = new Men;
+            $Men->id_person = $request->input('id_person');
+            $name = $request->input('name');
+            $Men->date_assitance = Carbon::now();
+            $Men->who_registered = $request->input('who_registered');
+            $Men->save();
+            return redirect()->back()->with('success', '¡La asistencia de '.$name.' ha sido confirmada!');
+        }
     }
 
     public function getTuesday() {
